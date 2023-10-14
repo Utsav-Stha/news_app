@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/feature/home_page.dart';
 import 'package:news_app/feature/tech_crunch_news/tech_crunch_news.dart';
 
 void main() {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
         useMaterial3: true,
       ),
-      home: TechCrunchNews(),
+      home: HomePage(),
     );
   }
 }

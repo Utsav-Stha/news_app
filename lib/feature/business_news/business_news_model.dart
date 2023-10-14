@@ -1,10 +1,10 @@
-class TechnewsModel {
-  TechnewsModel({
+class BusinessNewsModel {
+  BusinessNewsModel({
       this.status, 
       this.totalResults, 
       this.articles,});
 
-  TechnewsModel.fromJson(dynamic json) {
+  BusinessNewsModel.fromJson(dynamic json) {
     status = json['status'];
     totalResults = json['totalResults'];
     if (json['articles'] != null) {
@@ -17,10 +17,10 @@ class TechnewsModel {
   String? status;
   num? totalResults;
   List<Articles>? articles;
-TechnewsModel copyWith({  String? status,
+BusinessNewsModel copyWith({  String? status,
   num? totalResults,
   List<Articles>? articles,
-}) => TechnewsModel(  status: status ?? this.status,
+}) => BusinessNewsModel(  status: status ?? this.status,
   totalResults: totalResults ?? this.totalResults,
   articles: articles ?? this.articles,
 );
@@ -108,9 +108,9 @@ class Source {
     id = json['id'];
     name = json['name'];
   }
-  String? id;
+  dynamic id;
   String? name;
-Source copyWith({  String? id,
+Source copyWith({  dynamic id,
   String? name,
 }) => Source(  id: id ?? this.id,
   name: name ?? this.name,
