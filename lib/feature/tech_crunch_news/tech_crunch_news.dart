@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/feature/extended_news.dart';
 
 import '../../config/network/network_request.dart';
 
 class TechCrunchNews extends StatefulWidget {
-  const TechCrunchNews({Key? key}) : super(key: key);
+   TechCrunchNews({Key? key, this.neverScroll = false}) : super(key: key);
+  final bool neverScroll ;
 
   @override
   State<TechCrunchNews> createState() => _TechCrunchNewsState();
@@ -13,7 +15,7 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: ()async{
+      onRefresh: () async {
         NetworkRequest.getTechCrunchNews();
       },
       child: FutureBuilder(
@@ -24,7 +26,7 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
           // suruma connection check grne
           if (snapshot.hasData) {
             return ListView.separated(
-              // physics: NeverScrollableScrollPhysics(),
+              physics: widget.neverScroll? NeverScrollableScrollPhysics(): AlwaysScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (context, index) {
@@ -32,32 +34,50 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Text(news?.title ?? ''),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Image.network(news?.urlToImage ?? ''),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(news?.description ?? ''),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(news?.author ?? ''),
-                              Text(news?.publishedAt ?? ''),
-                            ],
-                          )
-                        ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ExtendedNews(
+                              newsType: 'tech',
+                              newsTitle: news?.title,
+                              newsImage: news?.urlToImage,
+                              newsDescription: news?.description,
+                              newsContent: news?.content,
+                              newsUrl: news?.url,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text(news?.title ?? ''),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Image.network(news?.urlToImage ?? ''),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(news?.description ?? ''),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(news?.author ?? ''),
+                                Text(news?.publishedAt ?? ''),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
