@@ -30,4 +30,19 @@ class NetworkRequest {
     }
     return [];
   }
+
+
+  static Future<List<tech.Articles>?> getTopNews() async {
+    final topResponse = await dio.get(techNews);
+    // print("My response :  ${response.data}");
+    print("Status Code: ${topResponse.statusCode}");
+    if (topResponse.statusCode == 200 || topResponse.statusCode == 201) {
+      //do this things
+      //here TechnewsModel ma json ko articles ko data matra jnxa esri
+      //also check greko if empty hunxa ki nai if bho bhne empty list pathako
+      return tech.TechnewsModel.fromJson(topResponse.data).articles ?? [];
+    }
+    //if condn satisfy bhyena bhne matra tala ko return huanxa
+    return [];
+  }
 }

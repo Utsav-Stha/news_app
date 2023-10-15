@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/feature/business_news/business_news.dart';
 import 'package:news_app/feature/tech_crunch_news/tech_crunch_news.dart';
+import 'package:news_app/feature/top_news/top_news.dart';
 
 
 import '../../config/network/network_request.dart';
@@ -49,7 +50,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       TechCrunchNews(),
                       BusinessNews(),
-                      Container(child: Text('3rd'),),
+                      TopNews(),
+
                     ]),
               ),
 
