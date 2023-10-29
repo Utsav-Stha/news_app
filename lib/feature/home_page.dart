@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/feature/business_news/business_news.dart';
 import 'package:news_app/feature/tech_crunch_news/tech_crunch_news.dart';
-import 'package:news_app/feature/top_news/top_news.dart';
-
-
+import 'package:news_app/feature/wall_street_news/wall_street_news.dart';
 import '../../config/network/network_request.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,7 +17,7 @@ class _HomePageState extends State<HomePage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Center(
+          title: const Center(
             child: Text('Tech News'),
           ),
         ),
@@ -30,7 +28,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             // shrinkWrap: true,
             children: [
-              TabBar(
+              const TabBar(
 
                 tabs: [
                   Tab(
@@ -40,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                     text: 'Business News',
                   ),
                   Tab(
-                    text: 'Top News',
+                    text: 'WallStreet News',
                   ),
                 ],
               ),
@@ -50,11 +48,9 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       TechCrunchNews(),
                       BusinessNews(),
-                      TopNews(),
-
+                      WallStreetNews(),
                     ]),
               ),
-
             ],
           ),
         ),

@@ -1,10 +1,10 @@
-class TechnewsModel {
-  TechnewsModel({
+class WallStreetNewsModel {
+  WallStreetNewsModel({
       this.status, 
       this.totalResults, 
       this.articles,});
 
-  TechnewsModel.fromJson(dynamic json) {
+  WallStreetNewsModel.fromJson(dynamic json) {
     status = json['status'];
     totalResults = json['totalResults'];
     if (json['articles'] != null) {
@@ -17,10 +17,10 @@ class TechnewsModel {
   String? status;
   num? totalResults;
   List<Articles>? articles;
-TechnewsModel copyWith({  String? status,
+WallStreetNewsModel copyWith({  String? status,
   num? totalResults,
   List<Articles>? articles,
-}) => TechnewsModel(  status: status ?? this.status,
+}) => WallStreetNewsModel(  status: status ?? this.status,
   totalResults: totalResults ?? this.totalResults,
   articles: articles ?? this.articles,
 );
@@ -54,7 +54,7 @@ class Articles {
     description = json['description'];
     url = json['url'];
     urlToImage = json['urlToImage'];
-    publishedAt = json['publishedAt'].toString().split(':').removeAt(0).split('T').removeAt(0);
+    publishedAt = json['publishedAt'];
     content = json['content'];
   }
   Source? source;

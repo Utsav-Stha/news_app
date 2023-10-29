@@ -1,64 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/config/network/network_request.dart';
 import 'package:news_app/feature/extended_news.dart';
 
-import '../../config/network/network_request.dart';
-
-class TechCrunchNews extends StatefulWidget {
-   TechCrunchNews({Key? key, this.neverScroll = false, this.setPadding = true, this.receivedIndex}) : super(key: key);
-  final bool neverScroll ;
+class WallStreetNews extends StatefulWidget {
+  const WallStreetNews({Key? key, this.recievedIndex, this.neverScroll = false, this.setPadding = true})
+      : super(key: key);
+  final int? recievedIndex;
+  final bool neverScroll;
   final bool setPadding;
-  final int? receivedIndex;
 
   @override
-  State<TechCrunchNews> createState() => _TechCrunchNewsState();
+  State<WallStreetNews> createState() => _WallStreetNewsState();
 }
 
-class _TechCrunchNewsState extends State<TechCrunchNews> {
+class _WallStreetNewsState extends State<WallStreetNews> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        NetworkRequest.getTechCrunchNews();
+        NetworkRequest.getWallStreetNews();
       },
       child: FutureBuilder(
-        //future ma future wala task ho jun time lagxa
-        future: NetworkRequest.getTechCrunchNews(),
-        //snapshot bhneko current data mageko, actual data chai snapshot ma auxa
+        future: NetworkRequest.getWallStreetNews(),
         builder: (context, snapshot) {
-          // suruma connection check grne
+          // var newss = widget.recievedIndex ?? 0;
           if (snapshot.hasData) {
             return ListView.separated(
-              physics: widget.neverScroll? NeverScrollableScrollPhysics(): AlwaysScrollableScrollPhysics(),
+              physics: widget.neverScroll
+                  ? NeverScrollableScrollPhysics()
+                  : AlwaysScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (context, index) {
+                print('index: $index');
+                print('  received index: ${widget.recievedIndex}');
+                // var currentIndex =
+                //     (index == widget.recievedIndex) ? index+1 : index;
+                // print('curren Index : $currentIndex');
                 var news = snapshot.data?[index];
-                if(widget.receivedIndex != index){
+                if(index != widget.recievedIndex){
                   return Padding(
-                    padding:  widget.setPadding? const EdgeInsets.all(8.0):const EdgeInsets.all(0.0),
+                    padding: widget.setPadding? const EdgeInsets.all(12.0): const EdgeInsets.all(0.0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
                               return ExtendedNews(
-                                newsType: 'tech',
+                                newsType: 'business',
+                                currentIndex: index,
                                 newsTitle: news?.title,
                                 newsImage: news?.urlToImage,
                                 newsDescription: news?.description,
                                 newsContent: news?.content,
                                 newsUrl: news?.url,
-                                future: NetworkRequest.getTechCrunchNews(),
-                                currentIndex: index,
                               );
-                            },
-                          ),
-                        );
+                            }));
                       },
                       child: Card(
                         child: Padding(
-                          padding: const EdgeInsets.all(6.0),
+                          padding: EdgeInsets.all(6.0),
                           child: Column(
                             children: [
                               Text(news?.title ?? ''),
@@ -76,33 +76,43 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(news?.author ?? ''),
-                                  Text(news?.publishedAt ?? ''),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text(
+                                      news?.author ?? '',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      // softWrap: true,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                    // flex: 2,
+                                    child: Text(news?.publishedAt ?? ''),
+                                  ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
-                  );
-                }
+                  );}
                 else{
                   return SizedBox(
                     height: 0,
                   );
                 }
-
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Divider();
               },
             );
           } else if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                "Error : ${snapshot.error}",
-              ),
+            return Text(
+              snapshot.error.toString(),
             );
           } else {
             return Center(

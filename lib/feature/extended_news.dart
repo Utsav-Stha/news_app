@@ -1,76 +1,146 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/feature/business_news/business_news.dart';
+import 'package:news_app/feature/business_news/business_news_model.dart';
+import 'package:news_app/feature/similar_news.dart';
 import 'package:news_app/feature/tech_crunch_news/tech_crunch_news.dart';
 
 class ExtendedNews extends StatelessWidget {
-  const ExtendedNews({Key? key, this.newsType, this.newsContent, this.newsDescription, this.newsImage, this.newsTitle, this.newsUrl}) : super(key: key);
+  const ExtendedNews(
+      {Key? key,
+      this.newsType,
+      this.newsContent,
+      this.newsDescription,
+      this.newsImage,
+      this.newsTitle,
+      this.newsUrl,
+      this.currentIndex,
+      this.future})
+      : super(key: key);
+
   final String? newsType;
+
   final String? newsTitle;
   final String? newsImage;
   final String? newsDescription;
   final String? newsContent;
   final String? newsUrl;
-
+  final int? currentIndex;
+  final Future<dynamic>? future;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leadingWidth: 36,
         leading: IconButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
-            }, icon: Icon(Icons.arrow_back_ios_rounded,size: 20,)),
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_rounded,
+              size: 20,
+            )),
         centerTitle: true,
-        title: Text(newsTitle!),
+        title: Text(
+          newsTitle!,
+          maxLines: 2,
+          style: TextStyle(
+            fontSize: 14,
+          ),
+        ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(newsTitle?? ''),
-                SizedBox(
-                  height: 10.0,
+          child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: SingleChildScrollView(
+          child: Column(
+            // physics: AlwaysScrollableScrollPhysics(),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                newsTitle ?? '',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
                 ),
-                Image.network(newsImage?? ''),
-                SizedBox(
-                  height: 12.0,
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              Image.network(newsImage ?? ''),
+              const SizedBox(
+                height: 12.0,
+              ),
+              Text(
+                newsDescription ?? '',
+                style: TextStyle(
+                  // fontWeight: FontWeight.w600,
+                  fontSize: 14,
                 ),
-                Text(newsDescription?? ''),
-                SizedBox(
-                  height: 10.0,
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              const Text(
+                'Content:',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
                 ),
-                Text('Content:'),
-                SizedBox(
-                  height: 12.0,
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Text(newsDescription ?? ''),
+              const SizedBox(
+                height: 12.0,
+              ),
+              const Text(
+                'See more:',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: Colors.blue,
                 ),
-                Text(newsDescription ?? ''),
-                Text('See more:'),
-                SizedBox(
-                  height: 8.0,
+              ),
 
-                ),
-                Text(newsUrl?? ''),
-                SizedBox(
-                  height: 12.0,
-                ),
+              TextButton(
+                onPressed: (){},
 
-                newsType =='tech'? TechCrunchNews(
-                  neverScroll: true,
-                ):
-                    BusinessNews(
-                      neverScroll: true,
-                    ),
+                child: Text( newsUrl?? '',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  color: Colors.blue,
+                ),),
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+             Text(
+                  'Similar News:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: Colors.purple
+                  ),
 
+              ),
 
-              ],
-            ),
+              ///Similar news
+              const SizedBox(
+                height: 10.0,
+              ),
+              SimilarNews(
+                currentIndex: currentIndex!,
+                newsType: newsType!,
+              ),
+            ],
           ),
-        )
-      ),
+        ),
+      )),
     );
   }
 }
