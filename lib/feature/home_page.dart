@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: RefreshIndicator(
           onRefresh: () async {
-            NetworkRequest.getTechCrunchNews();
+            NetworkRequest().getTechCrunchNews();
           },
           child: Column(
             // shrinkWrap: true,

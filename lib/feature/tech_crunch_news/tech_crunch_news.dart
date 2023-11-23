@@ -18,11 +18,11 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        NetworkRequest.getTechCrunchNews();
+        NetworkRequest().getTechCrunchNews();
       },
       child: FutureBuilder(
         //future ma future wala task ho jun time lagxa
-        future: NetworkRequest.getTechCrunchNews(),
+        future: NetworkRequest().getTechCrunchNews(),
         //snapshot bhneko current data mageko, actual data chai snapshot ma auxa
         builder: (context, snapshot) {
           // suruma connection check grne
@@ -49,7 +49,7 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
                                 newsDescription: news?.description,
                                 newsContent: news?.content,
                                 newsUrl: news?.url,
-                                future: NetworkRequest.getTechCrunchNews(),
+                                future: NetworkRequest().getTechCrunchNews(),
                                 currentIndex: index,
                               );
                             },

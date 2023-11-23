@@ -1,20 +1,35 @@
 import 'package:dio/dio.dart';
+import 'package:news_app/config/network/api_endpoint.dart';
 import 'package:news_app/feature/business_news/business_news_model.dart'
     as business;
 import 'package:news_app/feature/tech_crunch_news/technews_model.dart' as tech;
 
+import 'network_interceptor.dart';
+
 class NetworkRequest {
-  static String techNews =
-      "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=d043b06ae6ce4a6ca8b9ec6425b24d94";
-  static String businessNews =
-      "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=d043b06ae6ce4a6ca8b9ec6425b24d94";
-  
-  static String wallStreetNews = "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=d043b06ae6ce4a6ca8b9ec6425b24d94";
+  // static late var dio = Dio();
+  static  var dio =  Dio();
 
-  static final dio = Dio();
+  NetworkRequest() {
+    dio = Dio(baseOptions());
 
-  static Future<List<tech.Articles>?> getTechCrunchNews() async {
-    final techResponse = await dio.get(techNews);
+    dio.interceptors.add(NetworkInterceptor());
+  }
+
+  BaseOptions baseOptions() {
+    return BaseOptions(
+      baseUrl: APIEndPoint.baseUrl,
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      },
+      connectTimeout: Duration(seconds: 5),
+      receiveTimeout: Duration(seconds: 5),
+    );
+  }
+
+   Future<List<tech.Articles>?> getTechCrunchNews() async {
+    final techResponse = await dio.get(APIEndPoint.techNews);
     // print("My response :  ${response.data}");
     print("Status Code: ${techResponse.statusCode}");
     if (techResponse.statusCode == 200 || techResponse.statusCode == 201) {
@@ -28,7 +43,7 @@ class NetworkRequest {
   }
 
   static Future<List<business.Articles>?> getBusinessNews() async {
-    final businessResponse = await dio.get(businessNews);
+    final businessResponse = await dio.get(APIEndPoint.businessNews);
     print(businessResponse.statusCode);
     if (businessResponse.statusCode == 200 ||
         businessResponse.statusCode == 201) {
@@ -40,16 +55,23 @@ class NetworkRequest {
   }
 
   static Future<List<tech.Articles>?> getWallStreetNews() async {
-    final wallStreetResponse = await dio.get(techNews);
+    final wallStreetResponse = await dio.get(APIEndPoint.techNews);
     // print("My response :  ${response.data}");
     print("Status Code: ${wallStreetResponse.statusCode}");
-    if (wallStreetResponse.statusCode == 200 || wallStreetResponse.statusCode == 201) {
+    if (wallStreetResponse.statusCode == 200 ||
+        wallStreetResponse.statusCode == 201) {
       //do this things
       //here TechnewsModel ma json ko articles ko data matra jnxa esri
       //also check greko if empty hunxa ki nai if bho bhne empty list pathako
-      return tech.TechnewsModel.fromJson(wallStreetResponse.data).articles ?? [];
+      return tech.TechnewsModel.fromJson(wallStreetResponse.data).articles ??
+          [];
     }
     //if condn satisfy bhyena bhne matra tala ko retu rn huanxa
     return [];
   }
+
+  // static void submitUserLogin(Map userData) {
+  //   //TODO Send data to backend server using post API
+  //   dio.post();
+  // }
 }
