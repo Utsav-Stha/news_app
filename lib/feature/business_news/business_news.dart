@@ -28,8 +28,8 @@ class _BusinessNewsState extends State<BusinessNews> {
           if (snapshot.hasData) {
             return ListView.separated(
               physics: widget.neverScroll
-                  ? NeverScrollableScrollPhysics()
-                  : AlwaysScrollableScrollPhysics(),
+                  ? const NeverScrollableScrollPhysics()
+                  : const AlwaysScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (context, index) {
@@ -59,19 +59,19 @@ class _BusinessNewsState extends State<BusinessNews> {
                     },
                     child: Card(
                       child: Padding(
-                        padding: EdgeInsets.all(6.0),
+                        padding: const EdgeInsets.all(6.0),
                         child: Column(
                           children: [
                             Text(news?.title ?? ''),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Image.network(news?.urlToImage ?? ''),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Text(news?.description ?? ''),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Row(
@@ -86,7 +86,7 @@ class _BusinessNewsState extends State<BusinessNews> {
                                     // softWrap: true,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 Expanded(
@@ -102,13 +102,13 @@ class _BusinessNewsState extends State<BusinessNews> {
                   ),
                 );}
                 else{
-                  return SizedBox(
+                  return const SizedBox(
                     height: 0,
                   );
                 }
               },
               separatorBuilder: (BuildContext context, int index) {
-                return Divider();
+                return const Divider();
               },
             );
           } else if (snapshot.hasError) {
@@ -116,7 +116,7 @@ class _BusinessNewsState extends State<BusinessNews> {
               snapshot.error.toString(),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
