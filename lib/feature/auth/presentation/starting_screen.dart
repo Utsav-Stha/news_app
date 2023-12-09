@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:news_app/feature/auth/presentation/user_login.dart';
 import 'package:news_app/feature/auth/presentation/user_sign_in.dart';
 
-class StartingScreen extends StatelessWidget {
-  const StartingScreen({Key? key}) : super(key: key);
+import '../domain/auth_service.dart';
 
+class StartingScreen extends StatelessWidget {
+  final AuthService _auth = AuthService();
+   StartingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +23,7 @@ class StartingScreen extends StatelessWidget {
               const Text(
                 'To NEWShub',
                 style: TextStyle(
-                    color: Colors.yellow,
+                    color: Colors.purple,
                     fontSize: 48,
                     fontWeight: FontWeight.w500),
               ),
@@ -44,18 +46,18 @@ class StartingScreen extends StatelessWidget {
                     fit: BoxFit.cover),
               ),
               SizedBox(
-                height: 10.0,
+                height: 2.0,
               ),
               ElevatedButton(
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.yellowAccent),
                   foregroundColor: MaterialStatePropertyAll(Colors.black),
                   minimumSize: MaterialStatePropertyAll(
-                    Size(double.infinity, 60),
+                    Size(double.infinity, 40),
                   ),
                   textStyle: MaterialStatePropertyAll(TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 20
+                    fontSize: 16
 
                   ),),
                 ),
@@ -75,20 +77,30 @@ class StartingScreen extends StatelessWidget {
                   backgroundColor: MaterialStatePropertyAll(Colors.yellowAccent),
                   foregroundColor: MaterialStatePropertyAll(Colors.black),
                   minimumSize: MaterialStatePropertyAll(
-                    Size(double.infinity, 60),
+                    Size(double.infinity, 40),
                   ),
                   textStyle: MaterialStatePropertyAll(TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 20
+                      fontSize: 16
 
                   ),
                   ),
                 ),
+                // onPressed: () async{
+                //     dynamic result =  await _auth.signInAnon();
+                //     if(result == null){
+                //       print('Sign in error');
+                //     }
+                //     else{
+                //       print('Signed in');
+                //       print(result);
+                //     }
+                // },
                 onPressed: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const UserSignIn()),
-                  );
+                      context,
+                      MaterialPageRoute(builder: (context) =>  UserSignIn()),
+                    );
                 },
                 child: const Text('Sign in'),
               ),

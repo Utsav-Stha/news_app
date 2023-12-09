@@ -19,10 +19,10 @@ class _BusinessNewsState extends State<BusinessNews> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        NetworkRequest.getBusinessNews();
+        NetworkRequest().getBusinessNews();
       },
       child: FutureBuilder(
-        future: NetworkRequest.getBusinessNews(),
+        future: NetworkRequest().getBusinessNews(),
         builder: (context, snapshot) {
           // var newss = widget.recievedIndex ?? 0;
           if (snapshot.hasData) {

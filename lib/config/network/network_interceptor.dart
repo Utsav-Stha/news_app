@@ -20,7 +20,9 @@ class NetworkInterceptor implements Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     /// Logging:
     log('🌍 🌍 🌍 Retrieving request from network');
-    log('Url: ${options.uri}');
+      print('EndUri: ${options.uri}');
+       log('Url: ${options.uri}');
+
     log('Params: ${options.queryParameters}');
 
     /// options.headers['Authorization'] = 'Bearer $_accessToken';

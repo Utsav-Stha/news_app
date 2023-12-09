@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: RefreshIndicator(
           onRefresh: () async {
-            NetworkRequest().getTechCrunchNews();
+            NetworkRequest.getTechCrunchNews();
           },
           child: Column(
             // shrinkWrap: true,

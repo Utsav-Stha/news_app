@@ -7,28 +7,29 @@ import 'package:news_app/feature/tech_crunch_news/technews_model.dart' as tech;
 import 'network_interceptor.dart';
 
 class NetworkRequest {
-  // static late var dio = Dio();
-  static  var dio =  Dio();
+  static var dio;
+  // static  var dio =  Dio();
+// static var dio = Dio();
 
   NetworkRequest() {
-    dio = Dio(baseOptions());
+      dio = Dio(baseOptions());
+      dio.interceptors.add(NetworkInterceptor());
 
-    dio.interceptors.add(NetworkInterceptor());
   }
 
   BaseOptions baseOptions() {
     return BaseOptions(
       baseUrl: APIEndPoint.baseUrl,
       headers: {
-        'accept': 'application/json',
-        'content-type': 'application/json',
+        'Accept': 'application/json',
+        // 'Content-Type': 'application/json',
       },
-      connectTimeout: Duration(seconds: 5),
-      receiveTimeout: Duration(seconds: 5),
+      connectTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 5),
     );
   }
 
-   Future<List<tech.Articles>?> getTechCrunchNews() async {
+   static Future<List<tech.Articles>?> getTechCrunchNews() async {
     final techResponse = await dio.get(APIEndPoint.techNews);
     // print("My response :  ${response.data}");
     print("Status Code: ${techResponse.statusCode}");
@@ -42,11 +43,16 @@ class NetworkRequest {
     return [];
   }
 
-  static Future<List<business.Articles>?> getBusinessNews() async {
+   Future<List<business.Articles>?> getBusinessNews() async {
+
+    print("Get Business news");
     final businessResponse = await dio.get(APIEndPoint.businessNews);
+    // final businessResponse = await dio.get('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=d043b06ae6ce4a6ca8b9ec6425b24d94');
     print(businessResponse.statusCode);
-    if (businessResponse.statusCode == 200 ||
-        businessResponse.statusCode == 201) {
+    print(businessResponse.data);
+    if (businessResponse.statusCode == 200 || businessResponse.statusCode == 201) {
+      print('Inside Network Request : ${business.BusinessNewsModel.fromJson(businessResponse.data)
+          .articles}');
       return business.BusinessNewsModel.fromJson(businessResponse.data)
               .articles ??
           [];
