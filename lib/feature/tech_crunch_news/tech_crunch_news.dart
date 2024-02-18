@@ -4,8 +4,13 @@ import 'package:news_app/feature/extended_news.dart';
 import '../../config/network/network_request.dart';
 
 class TechCrunchNews extends StatefulWidget {
-   TechCrunchNews({Key? key, this.neverScroll = false, this.setPadding = true, this.receivedIndex}) : super(key: key);
-  final bool neverScroll ;
+  TechCrunchNews(
+      {Key? key,
+      this.neverScroll = false,
+      this.setPadding = true,
+      this.receivedIndex})
+      : super(key: key);
+  final bool neverScroll;
   final bool setPadding;
   final int? receivedIndex;
 
@@ -28,14 +33,18 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
           // suruma connection check grne
           if (snapshot.hasData) {
             return ListView.separated(
-              physics: widget.neverScroll? NeverScrollableScrollPhysics(): AlwaysScrollableScrollPhysics(),
+              physics: widget.neverScroll
+                  ? NeverScrollableScrollPhysics()
+                  : AlwaysScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (context, index) {
                 var news = snapshot.data?[index];
-                if(widget.receivedIndex != index){
+                if (widget.receivedIndex != index) {
                   return Padding(
-                    padding:  widget.setPadding? const EdgeInsets.all(8.0):const EdgeInsets.all(0.0),
+                    padding: widget.setPadding
+                        ? const EdgeInsets.all(8.0)
+                        : const EdgeInsets.all(0.0),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -74,7 +83,8 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
                                 height: 8,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(news?.author ?? ''),
                                   Text(news?.publishedAt ?? ''),
@@ -86,13 +96,11 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
                       ),
                     ),
                   );
-                }
-                else{
+                } else {
                   return SizedBox(
                     height: 0,
                   );
                 }
-
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Divider();
@@ -101,7 +109,7 @@ class _TechCrunchNewsState extends State<TechCrunchNews> {
           } else if (snapshot.hasError) {
             return Center(
               child: Text(
-                "Error : ${snapshot.error}",
+                "${snapshot.error}",
               ),
             );
           } else {
