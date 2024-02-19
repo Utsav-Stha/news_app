@@ -28,7 +28,7 @@ class _BusinessNewsState extends State<BusinessNews> {
       child: FutureBuilder(
         future: NetworkRequest.getBusinessNews(),
         builder: (context, snapshot) {
-          // var newss = widget.recievedIndex ?? 0;
+
           if (snapshot.hasData) {
             return ListView.separated(
               physics: widget.neverScroll
@@ -37,12 +37,10 @@ class _BusinessNewsState extends State<BusinessNews> {
               shrinkWrap: true,
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (context, index) {
-                print('index: $index');
-                print('  received index: ${widget.recievedIndex}');
-                // var currentIndex =
-                //     (index == widget.recievedIndex) ? index+1 : index;
-                // print('curren Index : $currentIndex');
-                var news = snapshot.data?[index];
+                // print('index: $index');
+                // print('  received index: ${widget.recievedIndex}');
+
+                var news = snapshot.data?[index++];
                 if (index != widget.recievedIndex) {
                   return Padding(
                     padding: widget.setPadding
@@ -72,7 +70,7 @@ class _BusinessNewsState extends State<BusinessNews> {
                               const SizedBox(
                                 height: 8,
                               ),
-                              Image.network(news?.urlToImage ?? ''),
+                              Image.network(news?.urlToImage ?? 'https://cdn.pixabay.com/photo/2017/06/08/17/32/not-found-2384304_1280.jpg'),
                               const SizedBox(
                                 height: 8,
                               ),

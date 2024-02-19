@@ -65,7 +65,7 @@ class _WallStreetNewsState extends State<WallStreetNews> {
                               SizedBox(
                                 height: 8,
                               ),
-                              Image.network(news?.urlToImage ?? ''),
+                              Image.network(news?.urlToImage ?? 'https://cdn.pixabay.com/photo/2017/06/08/17/32/not-found-2384304_1280.jpg'),
                               SizedBox(
                                 height: 8,
                               ),

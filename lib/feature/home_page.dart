@@ -33,13 +33,13 @@ class _HomePageState extends State<HomePage> {
 
                 tabs: [
                   Tab(
-                    text: 'Tech News',
+                    text: 'Tech',
                   ),
                   Tab(
-                    text: 'Business News',
+                    text: 'Business',
                   ),
                   Tab(
-                    text: 'WallStreet News',
+                    text: 'WallStreet',
                   ),
                 ],
               ),

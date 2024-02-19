@@ -31,7 +31,7 @@ class NetworkRequest {
   static Future<List<tech.Articles>?> getTechCrunchNews() async {
     // final techResponse = await dio.get(APIEndPoint.techNews);
     final techResponse = await dio.get(
-        'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=d043b06ae6ce4a6ca8b9ec6425b24d94');
+        'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=d043b06ae6ce4a6ca8b9ec6425b24d94');
 
     print("My response :  ${techResponse.data}");
     print("Status Code: ${techResponse.statusCode}");
